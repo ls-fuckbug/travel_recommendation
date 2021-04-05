@@ -1,5 +1,7 @@
 #加载收集了旅游路线信息
 
+# 加载景点信息
+# 输入路径
 def load_route(path):
     #打开待处理文件
     file=open(path, 'r', encoding='utf-8', errors='ignore')         ##############
@@ -14,14 +16,11 @@ def load_route(path):
 
 
 #根据景点名和路线建立景点先后矩阵
-
-def spot_mat(spots,routes):
-    spot_dic={}                      #景点名和位置的映射
-    n=0
-    for s in spots:
-        spot_dic[s]=n
-        n=n+1
+# 输入景点名和路线
+def spot_mat(name,routes):
+    name_dic={k: v for v, k in enumerate(name)}
     
+    n = len(name)
     order_mat=[]                       #景点先后矩阵   order_mat[i][j] 表示i景点之后去j景点有多少次
     for i in range(n):
         order_mat.append([])
@@ -30,13 +29,14 @@ def spot_mat(spots,routes):
     
     for r in routes:
         for i in range( len(r)-1 ):
-            if(r[i] in spot_dic and r[i+1] in spot_dic ):
-                order_mat[ spot_dic[r[i]] ][spot_dic[r[i+1]]]+=1
+            if(r[i] in name_dic and r[i+1] in name_dic ):
+                order_mat[ name_dic[r[i]] ][ name_dic[r[i+1]] ] += 1
     
-    return spot_dic,order_mat
+    return order_mat           #返回景点先后矩阵
     
     
-
-
+if __name__ == '__main__':
+    route = load_route('北京数据/北京旅游路线.txt')
+    
 
 

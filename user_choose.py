@@ -3,7 +3,7 @@ import numpy
 
 import numpy as np
 
-
+# 余弦相似度计算
 def cos_sim(vector_a, vector_b):
     """
     计算两个向量之间的余弦相似度
@@ -19,17 +19,19 @@ def cos_sim(vector_a, vector_b):
     sim = 0.5 + 0.5 * cos
     return sim
 
-
+# 用户特征向量计算
 def user_vec(mat,name_dic,spot_names):
     v=numpy.zeros(len(mat[0]))
     for name in spot_names:
         i=name_dic[name]
         v+=mat[i]
     v=v/[len(spot_names)]
-    return v
+    return v                  # 返回用户特征向量
 
+# 生成用户兴趣景点
+# 经典特征矩阵，用户特征，数量
 def user_spot(mat,user_v,n):
-    i_sim= {}
+    i_sim= {}                     # 景点索引余弦相似度计算
     for i in range(len(mat)):
         s=cos_sim(mat[i],user_v)
         i_sim[i]=s
@@ -40,4 +42,4 @@ def user_spot(mat,user_v,n):
         spos.append(key)
         if(len(spos)==n):
             break
-    return spos
+    return spos                     # 返回用户兴趣景点
